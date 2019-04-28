@@ -95,6 +95,7 @@ namespace DataParallelism
             // when the operation completes
             //
             // You could replace the Parallel Loop with PLINQ
+            // Why this implementation is not a great idea?
             var output = new StringBuilder();
             Parallel.ForEach(booksList.Keys, key =>
             {

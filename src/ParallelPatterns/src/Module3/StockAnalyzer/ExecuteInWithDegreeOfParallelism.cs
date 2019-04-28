@@ -10,9 +10,13 @@ namespace StockAnalyzer
     {
 
         public static async Task ExecuteInParallel<T>(this IEnumerable<T> collection,
-            Func<T, Task> processor,
+            Func<T, Task> action,
             int degreeOfParallelism)
         {
+            // TODO
+            // Implement logic that runs the "action" for
+            // each item "collection" with degree of parallelism "degreeOfParallelism"
+            
             Task[] tasks = null;
             await Task.WhenAll(tasks);
         }
@@ -23,21 +27,13 @@ namespace StockAnalyzer
         {
             Task<R>[] tasks = null;
 
+            // TODO
+            // Implement logic that runs the "projection" for
+            // each item "collection" with degree of parallelism "degreeOfParallelism"
+            
             var results = await Task.WhenAll(tasks.ToList());
             return results;
         }
 
-        public static Task ForEachAsyncConcurrent<T>(this IEnumerable<T> source, int dop, Func<T, Task> body)
-        {
-            var partitions = Partitioner.Create(source).GetPartitions(dop);
-            var tasks = partitions.Select(async partition =>
-            {
-                using (partition)
-                    while (partition.MoveNext())
-                        await body(partition.Current);
-            });
-
-            return Task.WhenAll(tasks);
-        }
     }
 }

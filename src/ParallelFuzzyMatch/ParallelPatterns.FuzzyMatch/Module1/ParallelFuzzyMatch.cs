@@ -142,7 +142,7 @@ namespace ParallelPatterns
                 string[] wordsLookup, 
                 IEnumerable<string> files)
         {
-            // A better apporach is to create a custom operator that preserves
+            // A better approach is to create a custom operator that preserves
             // the continuation semantic, while handling cases of error, exception and transformation
             // Signatures :
             //     Task<TOut> Then<TIn, TOut>(this Task<TIn> task, Func<TIn, TOut> next)  : Functor
@@ -150,8 +150,8 @@ namespace ParallelPatterns
 
             // Traverese the given files in parallel
             // TODO (1) : Implement a reusable and optimizied fucntion called "Then" that satisfied the previous signature  
-            // C# : go to the "Module 1\TaskCompoistion.cs" and add the missing code in TODO (1)
-            // F# : go to the FSharp project "Module 1\TaskCompoistion.fs" and add the missing code
+            // C# : go to the "Module 1\TaskComposition.cs" and add the missing code in TODO (1)
+            // F# : go to the FSharp project "Module 1\TaskComposition.fs" and add the missing code
             //
             // Optional/bonus function to implement with signature :
             // Task<TOut> SelectMany<TIn, TMid, TOut>(this Task<TIn> input, Func<TIn, Task<TMid>> f, Func<TIn, TMid, TOut> projection)

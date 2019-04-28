@@ -41,7 +41,7 @@ namespace DataParallelism.Reduce
             this IEnumerable<IGrouping<TKey, TMapped>> source, Func<IGrouping<TKey, TMapped>, TResult> reduce) => null;
 
 
-        public static TResult ReducePartioner<TValue, TResult>(this IEnumerable<TValue> source,
+        public static TResult ReducePartitioner<TValue, TResult>(this IEnumerable<TValue> source,
           Func<TValue, TResult> selector, Func<TResult, TResult, TResult> reducer, CancellationToken token = new CancellationToken())
       => default(TResult);
     }

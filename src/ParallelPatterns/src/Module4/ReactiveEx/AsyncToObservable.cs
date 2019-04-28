@@ -19,7 +19,7 @@ namespace ReactiveEx
             // TODO 
             // Generate a WebResponse Observable
             // then, using the web-response, extract the text of the
-            // http contect from the underlying stream
+            // http content from the underlying stream
 
             return Observable.Empty<string>();
         }

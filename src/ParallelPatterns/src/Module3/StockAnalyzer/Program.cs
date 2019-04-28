@@ -17,6 +17,12 @@ namespace StockAnalyzer.CS
     {
         static void Main(string[] args)
         {
+            // TODO
+            // control the degree of parallelism
+            // use either (or both) "RequestGate" and/or "ExecuteInWithDegreeOfParallelism" class(s)
+            // to be implemented 
+            
+            
             var stocks = Directory.GetFiles("../../Data/Tickers");
 
             //  Cancellation of Asynchronous Task

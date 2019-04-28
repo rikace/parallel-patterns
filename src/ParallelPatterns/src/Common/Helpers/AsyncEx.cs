@@ -15,7 +15,7 @@ namespace Functional.Async
             => await Task.FromResult(default(R));
 
         public static async Task<R> Map<T, R>(this Task<T> task, Func<T, R> map)
-            => map(await task.ConfigureAwait(false));
+            => await Task.FromResult(default(R));
 
         public static async Task<R> SelectMany<T, R>(this Task<T> task,
             Func<T, Task<R>> then) => await Bind(task, then);
@@ -23,8 +23,7 @@ namespace Functional.Async
         public static async Task<R> SelectMany<T1, T2, R>(this Task<T1> task,
             Func<T1, Task<T2>> bind, Func<T1, T2, R> project)
         {
-            T1 taskResult = await task;
-            return project(taskResult, await bind(taskResult));
+          return await Task.FromResult(default(R));
         }
 
         public static async Task<R> Select<T, R>(this Task<T> task, Func<T, R> project)

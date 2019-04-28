@@ -54,9 +54,9 @@ namespace DataParallelism.MapReduce
             Console.ReadLine();
         }
 
-        static char[] delimiters = { ' ', ',', ';', ':', '\"', '.' };
+        static readonly char[] delimiters = { ' ', ',', ';', ':', '\"', '.' };
 
-        async static Task<string> ProcessBookAsync(
+        static async Task<string> ProcessBookAsync(
             string bookContent, string title, HashSet<string> stopwords)
         {
             using (var reader = new StringReader(bookContent))

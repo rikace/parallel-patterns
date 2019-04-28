@@ -120,12 +120,12 @@ namespace DataParallelism.cs
                 // TODO
                 // calculate the total with parallel Reducer
                 //
-                // Note : if the len value increases, the LINQ/PLINQ "Sum" operator does not work.
+                // Note : if the len value increases over int.maxvalue, the LINQ/PLINQ "Sum" operator does not work.
                 // for example, the following code does not work. The reducer function should fix the issue
                 // var total = Enumerable.Range(0, len).Where(isPrime).AsParallel().Sum();
 
                 // implement the ReducePartitioner function
-                var total = ParallelReducer.ReducePartioner(Enumerable.Range(0, len), i => i, (a, b) => a + b);
+                var total = ParallelReducer.ReducePartitioner(Enumerable.Range(0, len), i => i, (a, b) => a + b);
 
                 Console.WriteLine($"The total is {total}");
             }, 5);

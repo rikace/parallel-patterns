@@ -113,6 +113,8 @@ namespace StockAnalyzer
 
         //  The Bind operator in action
         // TODO : 4.7
+        // implement the bind operator respecting the top signature
+        // the implementation should be full async (no blocking)
         // take a look at the Bind operator
         // replace using SelectMany and then use the Linq expression semantic (from ** in)
         async Task<Tuple<string, StockData[]>> ProcessStockHistoryBind(string symbol)

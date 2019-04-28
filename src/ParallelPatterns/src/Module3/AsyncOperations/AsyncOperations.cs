@@ -61,40 +61,6 @@ namespace AsyncOperations
             }
         }
 
-
-        private Func<string, Task<byte[]>> DownloadSiteIcon = async domain =>
-        {
-            var response = await new
-                HttpClient().GetAsync($"http://{domain}/favicon.ico");
-            return await response.Content.ReadAsByteArrayAsync();
-        };
-
-
-        // Download an image(icon) from the network asynchronously
-        public async Task DownloadIconAsync(string domain, string fileDestination)
-        {
-            using (FileStream stream = new FileStream(fileDestination,
-                FileMode.Create, FileAccess.Write,
-                FileShare.Write, 0x1000, FileOptions.Asynchronous))
-                await new HttpClient()
-                    .GetAsync($"http://{domain}/favicon.ico")
-                    .Bind(async content => await
-                        content.Content.ReadAsByteArrayAsync())
-                    .Map(bytes => Image.Load(new MemoryStream(bytes)))  
-                    .Tap(image => Task.Run(() => image.Save(fileDestination)));
-        }
-
-        async Task DownloadIconAsyncLINQ(string domain, string fileDestination)
-        {
-            using (FileStream stream = new FileStream(fileDestination,
-                            FileMode.Create, FileAccess.Write, FileShare.Write,
-                            0x1000, FileOptions.Asynchronous))
-                await (from response in new HttpClient()
-                                            .GetAsync($"http://{domain}/favicon.ico")
-                       from bytes in response.Content.ReadAsByteArrayAsync()
-                       select stream.WriteAsync(bytes, 0, bytes.Length));
-        }
-
         private static void CancelTask()
         {
             //  Cancellation Token callback
