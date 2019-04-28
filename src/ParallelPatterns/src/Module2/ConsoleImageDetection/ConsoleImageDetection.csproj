@@ -2,15 +2,17 @@
   <Import Project="..\..\netfx.props" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <RootNamespace>ConsoleTaskEx</RootNamespace>
+    <TargetFrameworks>net461;netcoreapp2.1</TargetFrameworks>
 
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ImageDetection\ImageDetection.csproj" />
+    <ProjectReference Include="..\Pipeline.FSharp\Pipeline.FSharp.fsproj" />
+    <ProjectReference Include="..\Pipeline\Pipeline.csproj" />
   </ItemGroup>
 
   <ItemGroup>
