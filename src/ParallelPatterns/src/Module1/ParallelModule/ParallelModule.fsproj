@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="ReduceParallel.fs" />
+    <Compile Include="PrimeNumbers.fs" />
+    <Compile Include="MapReduce.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Helpers.FSharp\Helpers.FSharp.fsproj" />
+  </ItemGroup>
+
+</Project>

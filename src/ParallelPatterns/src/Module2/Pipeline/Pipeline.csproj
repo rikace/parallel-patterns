@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="4.1.0" />
+    <PackageReference Include="System.Reactive.Interfaces" Version="4.1.0" />
+    <PackageReference Include="System.Reactive.Linq" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Helpers\Helpers.csproj" />
+    <ProjectReference Include="..\Pipeline.FSharp\Pipeline.FSharp.fsproj" />
+  </ItemGroup>
+
+</Project>

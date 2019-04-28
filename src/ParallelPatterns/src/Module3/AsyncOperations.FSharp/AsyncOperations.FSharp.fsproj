@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="RequestGate.fs" />
+    <Compile Include="AsyncModule.fs" />
+    <None Include="ConcurrentWebCrawling.fsx" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Module5\AgentPatterns\AgentPatterns.fsproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="ImageHandlers.fs" />
+    <Compile Include="CrawlerAgent.fs" />
+    <Compile Include="AgentParDegree.fs" />
+    <Compile Include="AsyncBoundedQueue.fs" />
+    <Compile Include="ParallelWorker.fs" />
+    <Compile Include="AgentInterfaces.fs" />
+    <Compile Include="ImagePipeline.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0005" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Helpers.FSharp\Helpers.FSharp.fsproj" />
+    <ProjectReference Include="..\..\Common\Helpers\Helpers.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="AgentPipe.fs" />
+    <Compile Include="Pipeline.fs" />
+    <Compile Include="PipelineFunc.fs" />
+    <Compile Include="TaskExtension.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Helpers\Helpers.csproj" />
+  </ItemGroup>
+
+</Project>

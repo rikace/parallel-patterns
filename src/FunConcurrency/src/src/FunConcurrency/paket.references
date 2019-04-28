@@ -1,0 +1,7 @@
+FSharp.Core
+SourceLink.Create.CommandLine
+Newtonsoft.Json
+HtmlAgilityPack
+System.Reactive
+System.Reactive.Linq
+System.Reactive.Interfaces

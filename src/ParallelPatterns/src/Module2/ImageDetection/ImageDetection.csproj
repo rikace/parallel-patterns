@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\..\netfx.props" />
+  <PropertyGroup>
+    <TargetFrameworks>net461</TargetFrameworks>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Helpers\Helpers.csproj" />
+    <ProjectReference Include="..\Pipeline.FSharp\Pipeline.FSharp.fsproj" />
+    <ProjectReference Include="..\Pipeline\Pipeline.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="haarcascade_frontalface_alt_tree.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+    <PackageReference Include="Emgu.CV">
+      <Version>3.4.1.2976</Version>
+    </PackageReference>
+  </ItemGroup>
+</Project>
