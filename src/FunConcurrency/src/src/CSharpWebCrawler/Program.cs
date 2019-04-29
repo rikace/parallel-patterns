@@ -18,6 +18,10 @@ namespace CSharpWebCrawler
             DataFlowCrawler.Start(urls, async (url, buffer) =>
             {
                 string fileName = Path.GetFileName(url);
+                
+                if (!Directory.Exists("Images"))
+                    Directory.CreateDirectory("Images");
+                
                 string name = @"Images/" + fileName;
 
                 using (Stream srm = File.OpenWrite(name))
