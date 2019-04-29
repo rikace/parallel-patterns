@@ -26,10 +26,11 @@ akka {
     }
     remote {
         dot-netty.tcp {
-		    port = 8080
+		    port = 8090
 		    hostname = 127.0.0.1
         }
     }
+    log-remote-lifecycle-events = DEBUG
 }
 ");
             Console.Title = "Remote Worker";
@@ -41,3 +42,4 @@ akka {
         }
     }
 }
+

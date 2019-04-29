@@ -28,10 +28,10 @@ namespace WebCrawler
 //        {
 //            return null;
 //        }
-        static Func<T, R> MemoizeLazyThreadSafe<T, R>(Func<T, R> func) where T : IComparable
+       public static Func<T, Task<R>> MemoizeLazyThreadSafe<T, R>(Func<T, Task<R>> func) where T : IComparable
         {
-            ConcurrentDictionary<T, Lazy<R>> cache = new ConcurrentDictionary<T, Lazy<R>>();
-            return arg => cache.GetOrAdd(arg, a => new Lazy<R>(() => func(a))).Value;
+            ConcurrentDictionary<T, Lazy<Task<R>>> cache = new ConcurrentDictionary<T, Lazy<Task<R>>>();
+            return arg => cache.GetOrAdd(arg, a => new Lazy<Task<R>>(() => func(a))).Value;
         }
 
     }

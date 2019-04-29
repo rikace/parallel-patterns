@@ -14,14 +14,10 @@ namespace AkkaFractalShared
             X = x;
             Y = y;
         }
-        public RenderedTile(bool isLastTile)
-        {
-            this.IsLastTile = isLastTile;
-        }
 
         public byte[] Bytes { get; }
         public int X { get; }
         public int Y { get; }
-        public bool IsLastTile { get; }
+      
     }
 }

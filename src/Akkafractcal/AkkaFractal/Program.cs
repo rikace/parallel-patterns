@@ -13,7 +13,6 @@ namespace AkkaFractalSource
     {
         static void Main(string[] args)
         {
-
             var config = ConfigurationFactory.ParseString(@"
 akka {
     log - config - on - start = on
@@ -35,14 +34,14 @@ akka {
             }
             /remoteactor {
                 router = round-robin-pool
-                nr-of-instances = 5
-                remote = ""akka.tcp://RemoteSystem@127.0.0.1:8080""
+                nr-of-instances = 1
+                remote = ""akka.tcp://RemoteSystem@127.0.0.1:8090""
             }
         }
     }
     remote {
         dot-netty.tcp {
-		    port = 8090
+		    port = 8080
 		    hostname = 127.0.0.1
         }
     }
@@ -63,25 +62,26 @@ akka {
             var ys = h / split;
             var xs = w / split;
 
+            Action completed = () =>
+            {
+                img.Save(destination);
+                Console.WriteLine("Tile render completed");
+            };
+
             Action<RenderedTile> renderer = tile =>
             {
-                if (tile.IsLastTile)
-                    img.Save(destination);
-                else
+                var tileImage = tile.Bytes.ToBitmap();
+                var xt = 0;
+                for (int x = 0; x < xs; x++)
                 {
-                    var tileImage = tile.Bytes.ToBitmap();
-                    var xt = 0;
-                    for (int x = 0; x < xs; x++)
+                    int yt = 0;
+                    for (int y = 0; y < ys; y++)
                     {
-                        int yt = 0;
-                        for (int y = 0; y < ys; y++)
-                        {
-                            img[x + tile.X, y + tile.Y] = tileImage[x, y];
-                            yt++;
-                        }
-
-                        xt++;
+                        img[x + tile.X, y + tile.Y] = tileImage[x, y];
+                        yt++;
                     }
+
+                    xt++;
                 }
             };
 
@@ -93,6 +93,7 @@ akka {
             var displayTile = Akka.Actor.Nobody.Instance;
 
             // TODO
+            // use the "remoteactor" configuration to enable remote deployment
             // increase the parallelism of the Actor "TileRenderActor"
             var actor = system.ActorOf(Props.Create<TileRenderActor>(), "render");
 

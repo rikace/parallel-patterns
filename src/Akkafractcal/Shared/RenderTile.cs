@@ -16,16 +16,11 @@ namespace AkkaFractalShared
             Width = width;
         }
 
-        public RenderTile(bool isLastTile)
-        {
-            this.IsLastTile = isLastTile;
-        }
 
         public int X { get; }
         public int Y { get; }
         public int Height { get; }
         public int Width { get; }
 
-        public bool IsLastTile { get; }
     }
 }

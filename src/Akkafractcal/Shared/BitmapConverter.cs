@@ -11,7 +11,7 @@ using SixLabors.ImageSharp.PixelFormats;
 
 namespace AkkaFractalShared
 {
-       public static class BitmapConverter
+    public static class BitmapConverter
     {
         public static byte[] ToByteArray(this Image<Rgba32> imageIn)
         {

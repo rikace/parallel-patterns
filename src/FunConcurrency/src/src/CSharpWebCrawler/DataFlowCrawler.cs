@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using HtmlAgilityPack;
 using System.Linq;
+using WebCrawler;
 
 namespace CSharpWebCrawler
 {
@@ -64,19 +65,21 @@ namespace CSharpWebCrawler
             var downloaderOptions = new ExecutionDataflowBlockOptions()
             {
             };
-            
-            
-            var downloader = new TransformBlock<string, string>(
-                async (url) =>
+
+            var downloadUrl = Memoization.MemoizeLazyThreadSafe<string, string>(async (url) =>
+            {
+                // TODO 1
+                // implement a download web page
+                using (WebClient wc = new WebClient())
                 {
-                    // TODO 1
-                    // implement a download web page
-                    using (WebClient wc = new WebClient())
-                    {
-                        string result = await wc.DownloadStringTaskAsync(url);
-                        return result;
-                    }
-                }, downloaderOptions);
+                    string result = await wc.DownloadStringTaskAsync(url);
+                    return result;
+                }
+            });
+            
+            
+            var downloader = new TransformBlock<string, string>(downloadUrl
+                , downloaderOptions);
 
 
             // TODO 1
@@ -167,6 +170,8 @@ namespace CSharpWebCrawler
                 }
             });
 
+          // linkBroadcaster.AsObservable().
+                
             StringComparison comparison = StringComparison.InvariantCultureIgnoreCase;
             Predicate<string> linkFilter = link =>
                 link.IndexOf(".aspx", comparison) != -1 ||
@@ -205,6 +210,7 @@ namespace CSharpWebCrawler
             // Write a batch block to parse group of 2 images per operation
             // Where should you link this block?
             // how do you ensure that all the images are parse also in case of Odd numbers?
+            
             foreach (var url in urls)
             {
                 downloader.Post(url);
