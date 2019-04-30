@@ -145,7 +145,7 @@ namespace StockAnalyzer
             // (1) Process the stock analysis in parallel
             // When all the computation complete, then output the stock details
             // Than control the level of parallelism processing max 2 stocks at a given time
-            // Suggestion, use the RequestGate class
+            // Suggestion, use the RequestGate class (and/or ExecuteInWithDegreeOfParallelism class)
             List<Task<Tuple<string, StockData[]>>> stockHistoryTasks = null; ;
 
 

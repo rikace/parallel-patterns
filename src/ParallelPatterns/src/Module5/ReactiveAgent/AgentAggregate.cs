@@ -47,7 +47,7 @@ namespace ParallelPatterns
             // TODO (8)  
             // replace the implementation using the urls.Aggregate with a new one that uses an Agent.
             var agentStateful = 
-                Agent.Start(ImmutableDictionary<string, string>.Empty,
+                Agent.StartWithRx(ImmutableDictionary<string, string>.Empty,
                 async (ImmutableDictionary<string, string> state, string msg) =>
                 {
                     if (state.TryGetValue(msg, out var content))
@@ -63,6 +63,14 @@ namespace ParallelPatterns
                     }
                 });
 
+            agentStateful.Observable().Subscribe(state =>
+            {
+                var lastUrl = state.Last().Key;
+                var lastHtmlPage = state.Last().Value;
+
+                Console.WriteLine($"Downloaded {lastUrl} with len {lastHtmlPage.Length}");
+            });
+            
             // run this code 
             urls.ForEach(agentStateful.Post);
         }

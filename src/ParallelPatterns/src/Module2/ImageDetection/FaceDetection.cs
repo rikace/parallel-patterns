@@ -7,25 +7,21 @@ namespace ImageDetection
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    
     using CommonHelpers;
     using Emgu.CV;
     using Emgu.CV.Structure;
-    using Microsoft.FSharp.Core;
-    
     using ParallelPatterns.TaskComposition;
 
     public class FaceDetection
     {
         public static void DetectFaces(string imageSource, string imageFolderDestination)
         {
-
             var imageFrame = new Image<Bgr, byte>(imageSource);
             var cascadeClassifier = new CascadeClassifier("haarcascade_frontalface_alt_tree.xml");
             var grayframe = imageFrame.Convert<Gray, byte>();
 
             var faces = cascadeClassifier.DetectMultiScale(
-              grayframe, 1.1, 3, System.Drawing.Size.Empty);
+                grayframe, 1.1, 3, System.Drawing.Size.Empty);
             foreach (var face in faces)
                 imageFrame.Draw(face, new Bgr(System.Drawing.Color.DarkRed), 3);
 
@@ -42,13 +38,12 @@ namespace ImageDetection
         // This can be used thread-safely because the ThreadLocal
         public static void DetectFacesThreadLocal(string imageSource, string imageFolderDestination)
         {
-
             var imageFrame = new Image<Bgr, byte>(imageSource);
             var cascadeClassifier = CascadeClassifierThreadLocal.Value;
             var grayframe = imageFrame.Convert<Gray, byte>();
 
             var faces = cascadeClassifier.DetectMultiScale(
-              grayframe, 1.1, 3, System.Drawing.Size.Empty);
+                grayframe, 1.1, 3, System.Drawing.Size.Empty);
             foreach (var face in faces)
                 imageFrame.Draw(face, new Bgr(System.Drawing.Color.DarkRed), 3);
 
@@ -64,7 +59,7 @@ namespace ImageDetection
             imageFolderDestination = imageFolderDestination ?? @"c:\Temp";
 
             var bitmapTaskss = from filePath in filePaths
-                               select Task.Run(() => DetectFacesThreadLocal(filePath, imageFolderDestination)); // ToArray
+                select Task.Run(() => DetectFacesThreadLocal(filePath, imageFolderDestination)); // ToArray
 
             return Task.WhenAll(bitmapTaskss);
         }
@@ -80,27 +75,28 @@ namespace ImageDetection
                 image => image.Result.Convert<Gray, byte>()
             );
             var grayframeTask = imageFrameTask.ContinueWith(
-               imageFrame => imageFrame.Result.Convert<Gray, byte>()
+                imageFrame => imageFrame.Result.Convert<Gray, byte>()
             );
 
             var facesTask = grayframeTask.ContinueWith(grayFrame =>
-            {
-                var cascadeClassifier = CascadeClassifierThreadLocal.Value;
-                return cascadeClassifier.DetectMultiScale(
-                    grayFrame.Result, 1.1, 3, System.Drawing.Size.Empty);
-            }
+                {
+                    var cascadeClassifier = CascadeClassifierThreadLocal.Value;
+                    return cascadeClassifier.DetectMultiScale(
+                        grayFrame.Result, 1.1, 3, System.Drawing.Size.Empty);
+                }
             );
 
             var bitmapTask = facesTask.ContinueWith(faces =>
-            {
-                foreach (var face in faces.Result)
-                    imageTask.Result.Draw(
-                          face, new Bgr(System.Drawing.Color.BurlyWood), 3);
-                return imageTask.Result.ToBitmap();
-            }
+                {
+                    foreach (var face in faces.Result)
+                        imageTask.Result.Draw(
+                            face, new Bgr(System.Drawing.Color.BurlyWood), 3);
+                    return imageTask.Result.ToBitmap();
+                }
             );
 
-            return bitmapTask.ContinueWith(image => image.Result.Save(Path.Combine(imageFolderDestination, Path.GetFileName(imageSource))));
+            return bitmapTask.ContinueWith(image =>
+                image.Result.Save(Path.Combine(imageFolderDestination, Path.GetFileName(imageSource))));
         }
 
         // Detect Faces function using Task-Continuation based on LINQ Expression
@@ -115,16 +111,17 @@ namespace ImageDetection
 
             // TODO finish the implementation of the "Task" operators
             // "Select" and "SelectMany" in the file "Common/Helpers/TaskComposition.cs"
-            
-            var imgTask = from image in Task.Run(() => new Image<Bgr, byte>(imageSource))
-                      from imageFrame in Task.Run(() => image.Convert<Gray, byte>())
-                      from bitmap in Task.Run(() => 
-                          CascadeClassifierThreadLocal.Value.DetectMultiScale(
-                                                   imageFrame, 1.1, 3, System.Drawing.Size.Empty)
-                                     ).Select(faces => drawBoundries(faces, image))
-                      select bitmap;
 
-            return imgTask.ContinueWith(img => img.Result.Save(Path.Combine(imageFolderDestination, Path.GetFileName(imageSource))));
+            var imgTask = from image in Task.Run(() => new Image<Bgr, byte>(imageSource))
+                from imageFrame in Task.Run(() => image.Convert<Gray, byte>())
+                from bitmap in Task.Run(() =>
+                    CascadeClassifierThreadLocal.Value.DetectMultiScale(
+                        imageFrame, 1.1, 3, System.Drawing.Size.Empty)
+                ).Select(faces => drawBoundries(faces, image))
+                select bitmap;
+
+            return imgTask.ContinueWith(img =>
+                img.Result.Save(Path.Combine(imageFolderDestination, Path.GetFileName(imageSource))));
         }
 
         public static void DetectFacesPipeline(string imagesFolder)
@@ -134,16 +131,16 @@ namespace ImageDetection
 
             Func<string, Image<Bgr, byte>> imageFn =
                 (fileName) => new Image<Bgr, byte>(fileName);
-            
+
             Func<Image<Bgr, byte>, Tuple<Image<Bgr, byte>, Image<Gray, byte>>> grayFn =
                 image => Tuple.Create(image, image.Convert<Gray, byte>());
-            
+
             Func<Tuple<Image<Bgr, byte>, Image<Gray, byte>>,
-                 Tuple<Image<Bgr, byte>, System.Drawing.Rectangle[]>> detectFn =
+                Tuple<Image<Bgr, byte>, System.Drawing.Rectangle[]>> detectFn =
                 frames => Tuple.Create(frames.Item1,
-                 CascadeClassifierThreadLocal.Value.DetectMultiScale(
-                     frames.Item2, 1.1, 3, System.Drawing.Size.Empty));
-            
+                    CascadeClassifierThreadLocal.Value.DetectMultiScale(
+                        frames.Item2, 1.1, 3, System.Drawing.Size.Empty));
+
             Func<Tuple<Image<Bgr, byte>, System.Drawing.Rectangle[]>, Image<Bgr, byte>> drawFn =
                 faces =>
                 {
@@ -155,86 +152,19 @@ namespace ImageDetection
             // TODO : replace one of the F# pipeline using the 
             //        C# implementation from project /Pipeline
             //        "ParallelPatterns.Pipeline<>"
-#if CSharp
-            
-        
+
+
             var imagePipe =
                 ParallelPatterns.Pipeline<string, Image<Bgr, byte>>
                     .Create(imageFn);
-                
+
             imagePipe.Then(grayFn)
-                    .Then(detectFn)
-                    .Then(drawFn);
-    
-            
+                .Then(detectFn)
+                .Then(drawFn);
+
+
             foreach (string fileName in files)
                 imagePipe.Enqueue(fileName);
-#else            
-            var imagePipe =
-                
-                Pipeline.FSharp.PipelineFunc.Pipeline<string, Image<Bgr, byte>>
-                    .Create(imageFn)
-                    .Then(grayFn)
-                    .Then(detectFn)
-                    .Then(drawFn);
-
-            CancellationTokenSource cts = new CancellationTokenSource();
-            imagePipe.Execute(4, cts.Token);
-
-            foreach (string fileName in files)
-                imagePipe.Enqueue(fileName,
-                    ((tup) =>
-                    {
-                        //tup.Item2.ToBitmapImage())
-                        // Replace Unit with Task 
-                        return (Unit)Activator.CreateInstance(typeof(Unit), true);
-                    }));
-#endif            
-        }
-
-        void StartFaceDetection_Pipeline_FSharpFunc(string imagesFolder)
-        {
-            var files = Directory.GetFiles(imagesFolder);
-
-            Func<string, Image<Bgr, byte>> imageFn =
-                (fileName) => new Image<Bgr, byte>(fileName);
-            Func<Image<Bgr, byte>, Tuple<Image<Bgr, byte>, Image<Gray, byte>>> grayFn =
-                image => Tuple.Create(image, image.Convert<Gray, byte>());
-            Func<Tuple<Image<Bgr, byte>, Image<Gray, byte>>,
-                 Tuple<Image<Bgr, byte>, System.Drawing.Rectangle[]>> detectFn =
-                frames => Tuple.Create(frames.Item1,
-                 CascadeClassifierThreadLocal.Value.DetectMultiScale(
-                     frames.Item2, 1.1, 3, System.Drawing.Size.Empty));
-
-            Func<Tuple<Image<Bgr, byte>, System.Drawing.Rectangle[]>, Image<Bgr, byte>> drawFn =
-                faces =>
-                {
-                    foreach (var face in faces.Item2)
-                        faces.Item1.Draw(face, new Bgr(System.Drawing.Color.BurlyWood), 3);
-                    return faces.Item1;
-                };
-
-            // TODO : replace one of the F# pipeline using the 
-            //        C# implementation from project /Pipeline 
-            var imagePipe =
-                Pipeline.FSharp.Pipeline<string, Image<Bgr, byte>>
-                    .Create(imageFn)
-                    .Then(grayFn)
-                    .Then(detectFn)
-                    .Then(drawFn);
-
-            CancellationTokenSource cts = new CancellationTokenSource();
-            imagePipe.Execute(4, cts.Token);
-            
-            var unit = (Unit)Activator.CreateInstance(typeof(Unit), true);
-
-            foreach (string fileName in files)
-                imagePipe.Enqueue(fileName,
-                    ((tup) =>
-                    {
-                        //tup.Item2.ToBitmapImage()));
-                        return unit;
-                    }));
         }
     }
 }

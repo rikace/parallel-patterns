@@ -10,12 +10,14 @@ namespace ReactiveEx
             var ping = new Ping();
             var pong = new Pong();
 
-            Console.WriteLine("Press any key to stop ...");
+            
 
             // TODO 
             // register the Ping and Pong (Observable/Observer) to each other
             // var pongSubscription
             // var pingSubscription
+            
+            Console.WriteLine("Press any key to stop ...");
 
             Console.ReadKey();
 

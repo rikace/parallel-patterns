@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Helpers\Helpers.csproj" />
-    <ProjectReference Include="..\Pipeline.FSharp\Pipeline.FSharp.fsproj" />
   </ItemGroup>
 
 </Project>

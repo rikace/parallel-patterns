@@ -11,9 +11,18 @@ namespace ReactiveAgent.Agents
         Task Send(TMessage message);
         void Post(TMessage message);
 
+        
         // TODO :
         //      Add an AsObservable property to access the IObservable<'R>
         //      The type 'R is the result of a projection over the type TMessage
+    }
+
+    public interface IAgentRx<TMessage, TResult>
+    {
+        Task Send(TMessage message);
+        void Post(TMessage message);
+
+        IObservable<TResult> Observable();
     }
 
     public interface IReplyAgent<TMessage, TReply> : IAgent<TMessage>
@@ -23,6 +32,9 @@ namespace ReactiveAgent.Agents
 
     public static class Agent
     {
+        public static IAgentRx<TMessage, TResult> StartWithRx<TMessage, TResult>(TResult initialState, Func<TResult, TMessage, Task<TResult>> action, CancellationTokenSource cts = null)
+            => new StatefulDataflowAgentWithRx<TResult, TMessage>(initialState, action, cts);
+        
         public static IAgent<TMessage> Start<TMessage>(Action<TMessage> action, CancellationTokenSource cts = null)
             => new StatelessDataflowAgent<TMessage>(action, cts);
         public static IAgent<TMessage> Start<TMessage>(Func<TMessage, Task> action, CancellationTokenSource cts = null)

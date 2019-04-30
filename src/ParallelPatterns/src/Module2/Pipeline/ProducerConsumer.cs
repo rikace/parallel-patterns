@@ -43,6 +43,7 @@ namespace Pipeline
             
             inputData = new BlockingCollection<string>(10);
             outputData = new BlockingCollection<Image<Rgba32>>(10);
+          
             function = async filename =>
             {
                 byte[] result;

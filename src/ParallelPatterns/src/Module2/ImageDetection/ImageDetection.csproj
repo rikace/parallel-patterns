@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Helpers\Helpers.csproj" />
-    <ProjectReference Include="..\Pipeline.FSharp\Pipeline.FSharp.fsproj" />
     <ProjectReference Include="..\Pipeline\Pipeline.csproj" />
   </ItemGroup>
 
