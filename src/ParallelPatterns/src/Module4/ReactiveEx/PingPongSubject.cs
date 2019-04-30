@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Reactive
 {
     // TODO implement the interface "ISubject<Pong, Ping>"
-    public class Ping  
+    public class Ping //: ISubject<Ping, Pong>
     {
 
         // Subscribes an observer to the observable sequence.
@@ -34,7 +34,7 @@ namespace Reactive
         {
             // TODO
             // implement an Observable timer that sends a notification
-            // to the subscriber ("PIng") every 1.5 second
+            // to the subscriber ("Ping") every 1.5 second
             // Suggestion, the trick is to send to the observer a message
             // that contains this instance of PONG
             return null;

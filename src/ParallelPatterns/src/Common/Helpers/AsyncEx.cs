@@ -12,10 +12,10 @@ namespace Functional.Async
         public static Task<T> Return<T>(T task) => Task.FromResult(task);
 
         public static async Task<R> Bind<T, R>(this Task<T> task, Func<T, Task<R>> cont)
-            => await Task.FromResult(default(R));
+            => await cont(await task.ConfigureAwait(false)).ConfigureAwait(false);
 
         public static async Task<R> Map<T, R>(this Task<T> task, Func<T, R> map)
-            => await Task.FromResult(default(R));
+            => map(await task.ConfigureAwait(false));
 
         public static async Task<R> SelectMany<T, R>(this Task<T> task,
             Func<T, Task<R>> then) => await Bind(task, then);
@@ -23,7 +23,8 @@ namespace Functional.Async
         public static async Task<R> SelectMany<T1, T2, R>(this Task<T1> task,
             Func<T1, Task<T2>> bind, Func<T1, T2, R> project)
         {
-          return await Task.FromResult(default(R));
+            T1 taskResult = await task;
+            return project(taskResult, await bind(taskResult));
         }
 
         public static async Task<R> Select<T, R>(this Task<T> task, Func<T, R> project)
@@ -38,7 +39,7 @@ namespace Functional.Async
             }).Unwrap();
 
         public static async Task<T> Retry<T>(Func<Task<T>> task, int retries,
-                                TimeSpan delay, CancellationToken? cts = null) =>
+            TimeSpan delay, CancellationToken? cts = null) =>
             await task().ContinueWith(async innerTask =>
             {
                 cts?.ThrowIfCancellationRequested();

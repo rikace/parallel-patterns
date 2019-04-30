@@ -52,8 +52,7 @@ namespace CSharpSentimentAnalysis
                 Print($"{sentiment.ToString()} - {tweet.Text}", SentimentAnalysis.EmotionType.consoleColor(sentiment));
             });
 
-            
-            
+                     
             // Using Rx
             var obs = DataProducer.TweetStream.GetReactiveTweets(TimeSpan.FromMilliseconds(150))
                 .SubscribeOn(TaskPoolScheduler.Default);

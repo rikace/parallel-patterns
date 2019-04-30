@@ -58,14 +58,19 @@ namespace AsyncOperations
 
             var urls = new List<string>
             {
-                "https://edition.cnn.com", "http://www.bbc.com", "https://www.microsoft.com", "https://www.apple.com",
-                "https://www.amazon.com", "https://www.facebook.com"
+                "https://edition.cnn.com", 
+                "http://www.bbc.com", 
+                "https://www.microsoft.com", 
+                "https://www.apple.com",
+                "https://www.amazon.com", 
+                "https://www.facebook.com"
             };
 
             var asyncOps = new Program();
 
             var tasks = (from url in urls
-                select asyncOps.DownloadSiteIconAsync(url, "../../Data/Images")).ToArray();
+                select asyncOps.DownloadSiteIconAsync(url, "../../Data/Images"))
+                .ToArray();
 
             Task.WhenAll(tasks);
         }

@@ -17,7 +17,7 @@ namespace StockAnalyzer.CS
         {
             // TODO 
             // implement the logic to coordinate the access to resources 
-            // using "semaphore". Keep async semantic for the "acquire" and "release" of the hanld3
+            // using "semaphore". Keep async semantic for the "acquire" and "release" of the handle
             throw new Exception("No implemented");
         }
     }
