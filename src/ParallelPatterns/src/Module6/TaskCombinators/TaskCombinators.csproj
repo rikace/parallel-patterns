@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Helpers\Helpers.csproj" />
+    <ProjectReference Include="..\..\Module1\ParallelPatterns\ParallelPatterns.csproj" />
+    <ProjectReference Include="..\..\Module3\AsyncOperations\AsyncOperations.csproj" />
+    <ProjectReference Include="..\..\Module5\ReactiveAgent\ReactiveAgent.csproj" />
+  </ItemGroup>
+
+</Project>

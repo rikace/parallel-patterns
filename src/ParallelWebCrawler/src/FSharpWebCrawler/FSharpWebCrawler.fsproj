@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Title>FunConcurrency</Title>
+    <Description>FunConcurrency does the thing!</Description>
+    <!-- summary is not migrated from project.json, but you can use the <Description> property for that if needed. -->
+    <PackageTags>f#, fsharp</PackageTags>
+    <PackageProjectUrl>https://github.com/MyGithubUsername/FunConcurrency</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/MyGithubUsername/FunConcurrency/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <Authors>MyGithubUsername</Authors>
+    <RepositoryUrl>https://github.com/MyGithubUsername/FunConcurrency</RepositoryUrl>
+    <!-- owners is not supported in MSBuild -->
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Helpers.fs" />
+    <Compile Include="Common\Interfaces.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Module3_Asynchronous\Async.fs" />
+    <Compile Include="Module3_Asynchronous\AsyncCombinators.fs" />
+    <Compile Include="Module3_Asynchronous\AsyncModule.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Module2_AgentPipeline\AgentPipeline.fs" />
+    <Compile Include="Module2_AgentPipeline\ReactiveAgent.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Module1_WebCrawler\AgentWebCrawler.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\GinevraBenci.jpg" />
+    <Content Include="Images\LadyErmine.jpg" />
+    <Content Include="Images\MonaLisa.jpg" />
+    <Content Include="Images\picasso.bmp" />
+    <Content Include="Images\velasquez.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" Condition="'$(TargetFramework)' == 'net461'">
+      <HintPath>..\..\packages\NETStandard.Library\build\netstandard2.0\ref\System.Drawing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0006" />
+  </ItemGroup>
+  <Import Project="..\..\fsc.props" />
+  <Import Project="..\..\netfx.props" />
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

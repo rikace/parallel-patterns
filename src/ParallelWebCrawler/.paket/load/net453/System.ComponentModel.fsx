@@ -1,0 +1,3 @@
+namespace PaketLoadScripts
+
+#r "System" 
