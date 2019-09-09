@@ -1,7 +1,7 @@
-#Modern patterns of concurrent and parallel programming in .NET 
+# Modern patterns of concurrent and parallel programming in .NET 
 
 
-#####Learn how to write correct and deterministic parallel programs 
+## Learn how to write correct and deterministic parallel programs 
 
 Become the master of the multicore domain. Learn how to harness the powers of parallel computation and multicore computation to dominate peer applications in finance software, video games, web applications and market analysis. To yield the most performance, computer programmers have to partition and divide computations to maximize the performance while taking full advantage of multicore processors. Start your path from Padawan to Jedi, after this workshop you will be ready to return to work and have code bend to your will. 
 Concurrency, multi-core parallelism, and distributed parallelism are powerful and accessible. These computing concepts promise big impacts on the full spectrum of software applications, including video games, web applications and market analytics suites. Programmers of these products know how to partition computations over large distributed datasets in order to take full advantage of modern hardware and computing environments. These programming skills are not easy to master. This course will introduce technologies and tools available to developers at every level who are interested in achieving high-performance, reliable and maintainable code through functional-style parallelism and concurrency.
